@@ -1,30 +1,31 @@
 package com.skerdy.httpulse;
 
-import com.skerdy.httpulse.core.HttpMethod;
+import com.skerdy.httpulse.apimanager.PulseApiManager;
 import com.skerdy.httpulse.core.PulseHttpClient;
-import com.skerdy.httpulse.core.PulseRequest;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-
-import java.util.Map;
+import org.springframework.shell.standard.ShellOption;
 
 @ShellComponent
 public class Commands {
 
     private final PulseHttpClient pulseHttpClient;
 
-    public Commands(PulseHttpClient pulseHttpClient) {
+    private final PulseApiManager pulseApiManager;
+
+    public Commands(PulseHttpClient pulseHttpClient, PulseApiManager pulseApiManager) {
         this.pulseHttpClient = pulseHttpClient;
+        this.pulseApiManager = pulseApiManager;
     }
 
-    @ShellMethod(key = "http")
-    public String method() {
-        // test only
-        PulseRequest pulseRequest = new PulseRequest();
-        pulseRequest.setUrl("http://localhost:8080/api/post/simple");
-        pulseRequest.setHttpMethod(HttpMethod.POST);
-        pulseRequest.setHeaders(Map.of("Content-Type","application/json"));
-        pulseRequest.setBody("{\"stringValue\": \"RANDOM_STRING\"}");
+    @ShellMethod(key = "pulse init")
+    public String init() {
+        return pulseApiManager.init();
+    }
+
+    @ShellMethod(key = "pulse")
+    public String fireRequest(@ShellOption Integer index) {
+        var pulseRequest = pulseApiManager.getRequest(index);
         return pulseHttpClient.execute(pulseRequest);
     }
 }

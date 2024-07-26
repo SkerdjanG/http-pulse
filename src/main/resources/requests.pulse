@@ -1,0 +1,8 @@
+[Simple POST Request]
+POST http://localhost:8080/api/post/simple
+Content-Type: application/json
+{"stringValue": "RANDOM_STRING"}
+
+[Simple GET Request]
+GET http://localhost:8080/api/get/simple
+Content-Type: application/json

@@ -2,7 +2,7 @@ grammar PulseRequest;
 
 requestFile: (request)* EOF ;
 
-request: newLine? requestName httpMethod url newLine headers body? script? ;
+request: NEW_LINE? requestName httpMethod url NEW_LINE headers? body? ;
 
 httpMethod: HTTP_METHOD;
 
@@ -12,18 +12,13 @@ url: URL;
 
 URL: 'http' 's'? '://' ~[\r\n\t ]+ ;
 
-headers: (header newLine)+ newLine* ;
+headers: (header)+ ;
 
-header: headerName ':' WS? headerValue ;
+header: headerName ':' headerValue NEW_LINE? ;
 
-script: preRequestScript | responseScript ;
+NEW_LINE: '\r'? '\n' ;
 
-preRequestScript: '<' '{%' .*? '%>' ;
-responseScript: '>' '{%' .*? '%>' ;
-
-newLine: '\r'? '\n'  ;
-
-requestName: REQUEST_NAME newLine;
+requestName: REQUEST_NAME NEW_LINE;
 
 REQUEST_NAME : '[' ('a'..'z'|'A'..'Z'| '_' | '-' | ' ')+ ']' ;
 
@@ -31,7 +26,7 @@ ALPHA: [A-Za-z];
 
 DIGIT: [0-9];
 
-tchar: '!' |   '#' |   '$' |   '%' |   '&' |   '\'' | '/'    |   '*' |   '+' |   '-' |   '.' |   '^' |   '_' |   '`' |   '|' |   '~' |   DIGIT   |   ALPHA;
+tchar: '!' |   '#' |   '$' |   '%' |   '&' |   '\'' | '/'  | '*' |   '+' |   '-' |   '.' |   '^' |   '_' |   '`' |   '|' |   '~' |   DIGIT   |   ALPHA;
 
 headerName: token;
 headerValue: token;
@@ -41,10 +36,7 @@ token: tchar+;
 // JSON grammar
 body: value;
 
-object
-    : '{' pair (',' pair)* '}'
-    | '{' '}'
-    ;
+object: '{' pair (',' pair)* '}' | '{' '}' ;
 
 pair
     : STRING ':' value
@@ -65,7 +57,7 @@ value
     | 'null'
     ;
 
-STRING: '"' (ESC | SAFECODEPOINT)* '"';
+STRING: '"' (ESC | SAFECODEPOINT)* '"' WS?;
 
 fragment ESC: '\\' (["\\/bfnrt] | UNICODE);
 
@@ -75,10 +67,10 @@ fragment HEX: [0-9a-fA-F];
 
 fragment SAFECODEPOINT: ~ ["\\\u0000-\u001F];
 
-NUMBER: '-'? INT ('.' [0-9]+)? EXP?;
+NUMBER: '-'? INT ('.' [0-9]+)? EXP? ;
 
 fragment INT: '0' | [1-9] [0-9]*;
 
 fragment EXP: [Ee] [+-]? [0-9]+;
 
-WS: [ \t\n\r]+ -> skip ;
+WS: [ \t\n\r]+ -> skip;
