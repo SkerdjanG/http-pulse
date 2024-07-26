@@ -11,9 +11,11 @@ import java.util.Map;
 public class HttpRequestGenerator {
 
     private final PostRequestGenerator postRequestGenerator;
+    private final GetRequestGenerator getRequestGenerator;
 
-    public HttpRequestGenerator(PostRequestGenerator postRequestGenerator) {
+    public HttpRequestGenerator(PostRequestGenerator postRequestGenerator, GetRequestGenerator getRequestGenerator) {
         this.postRequestGenerator = postRequestGenerator;
+        this.getRequestGenerator = getRequestGenerator;
     }
 
     public HttpRequest generate(PulseRequest pulseRequest) {
@@ -23,6 +25,7 @@ public class HttpRequestGenerator {
 
         switch(pulseRequest.getHttpMethod()) {
             case POST -> postRequestGenerator.generate(httpRequest, pulseRequest);
+            case GET -> getRequestGenerator.generate(httpRequest, pulseRequest);
             default -> throw new RuntimeException();
         }
         return httpRequest.build();
