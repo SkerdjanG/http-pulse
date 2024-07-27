@@ -86,6 +86,7 @@
 				<configuration>
 					<buildArgs>
 						<buildArgss>--enable-url-protocols=http</buildArgss>
+						<arg>-H:+AddAllCharsets</arg>
 					</buildArgs>
 					<metadataRepository>
 						<enabled>true</enabled>
