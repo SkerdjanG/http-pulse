@@ -6,6 +6,12 @@
 Leveraging its own custom-built **Pulse Language**, http-pulse aims to replace the need for tools like Postman or 
 IntelliJ IDEA HTTP Client, providing a seamless and efficient experience for developers and testers.
 
+## Demo
+
+![](/assets/http-pulse-demo.mp4)
+
+<video src="/assets/http-pulse-demo.mp4" width="320" height="240" controls></video>
+
 ## Features
 
 - **Full-fledged REST Client**: Execute GET, POST, PUT, DELETE, PATCH and other HTTP methods with ease.
