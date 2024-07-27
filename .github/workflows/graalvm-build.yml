@@ -19,7 +19,7 @@ jobs:
 
       - name: test
         run: |
-           chmod +x mvnw
+          chmod +x mvnw
           ./mvnw clean test
 
       - name: build-native
