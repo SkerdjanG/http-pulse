@@ -6,3 +6,8 @@ Content-Type: application/json
 [Simple GET Request]
 GET http://localhost:8080/api/get/simple
 Content-Type: application/json
+
+[Simple PUT Request]
+PUT http://localhost:8080/api/put/simple
+Content-Type: application/json
+{"stringValue": "RANDOM_PUT_STRING"}
