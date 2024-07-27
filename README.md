@@ -8,9 +8,12 @@ IntelliJ IDEA HTTP Client, providing a seamless and efficient experience for dev
 
 ## Demo
 
-![](/assets/http-pulse-demo.mp4)
+- pulse init
+- pulse 0
+- pulse 1
+- pulse 2
 
-<video src="/assets/http-pulse-demo.mp4" width="320" height="240" controls></video>
+![](/assets/http-pulse-demo.gif)
 
 ## Features
 
