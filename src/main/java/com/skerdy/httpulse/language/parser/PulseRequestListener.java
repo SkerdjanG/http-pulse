@@ -89,4 +89,5 @@ public class PulseRequestListener extends PulseRequestBaseListener {
                 .replace("\"\"", "\"")
         );
     }
+
 }

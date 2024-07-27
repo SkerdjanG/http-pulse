@@ -60,4 +60,5 @@ public class PulseApiManager {
         }
         return result.toString();
     }
+
 }

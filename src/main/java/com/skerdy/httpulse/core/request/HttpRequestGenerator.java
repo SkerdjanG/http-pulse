@@ -1,6 +1,7 @@
 package com.skerdy.httpulse.core.request;
 
 import com.skerdy.httpulse.core.PulseRequest;
+import com.skerdy.httpulse.core.exceptions.UnsupportedHttpMethodException;
 import org.springframework.stereotype.Component;
 
 import java.net.URI;
@@ -12,10 +13,20 @@ public class HttpRequestGenerator {
 
     private final PostRequestGenerator postRequestGenerator;
     private final GetRequestGenerator getRequestGenerator;
+    private final PutRequestGenerator putRequestGenerator;
+    private final PatchRequestGenerator patchRequestGenerator;
+    private final DeleteRequestGenerator deleteRequestGenerator;
 
-    public HttpRequestGenerator(PostRequestGenerator postRequestGenerator, GetRequestGenerator getRequestGenerator) {
+    public HttpRequestGenerator(PostRequestGenerator postRequestGenerator,
+                                GetRequestGenerator getRequestGenerator,
+                                PutRequestGenerator putRequestGenerator,
+                                PatchRequestGenerator patchRequestGenerator,
+                                DeleteRequestGenerator deleteRequestGenerator) {
         this.postRequestGenerator = postRequestGenerator;
         this.getRequestGenerator = getRequestGenerator;
+        this.putRequestGenerator = putRequestGenerator;
+        this.patchRequestGenerator = patchRequestGenerator;
+        this.deleteRequestGenerator = deleteRequestGenerator;
     }
 
     public HttpRequest generate(PulseRequest pulseRequest) {
@@ -26,7 +37,10 @@ public class HttpRequestGenerator {
         switch(pulseRequest.getHttpMethod()) {
             case POST -> postRequestGenerator.generate(httpRequest, pulseRequest);
             case GET -> getRequestGenerator.generate(httpRequest, pulseRequest);
-            default -> throw new RuntimeException();
+            case PUT -> putRequestGenerator.generate(httpRequest, pulseRequest);
+            case PATCH -> patchRequestGenerator.generate(httpRequest, pulseRequest);
+            case DELETE -> deleteRequestGenerator.generate(httpRequest, pulseRequest);
+            default -> throw new UnsupportedHttpMethodException(pulseRequest.getHttpMethod().toString());
         }
         return httpRequest.build();
     }

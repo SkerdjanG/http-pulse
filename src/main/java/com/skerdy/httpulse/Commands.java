@@ -2,11 +2,10 @@ package com.skerdy.httpulse;
 
 import com.skerdy.httpulse.apimanager.PulseApiManager;
 import com.skerdy.httpulse.core.PulseHttpClient;
-import org.springframework.shell.standard.ShellComponent;
-import org.springframework.shell.standard.ShellMethod;
-import org.springframework.shell.standard.ShellOption;
+import org.springframework.shell.command.annotation.Command;
+import org.springframework.shell.command.annotation.Option;
 
-@ShellComponent
+@Command(command = "pulse")
 public class Commands {
 
     private final PulseHttpClient pulseHttpClient;
@@ -18,14 +17,15 @@ public class Commands {
         this.pulseApiManager = pulseApiManager;
     }
 
-    @ShellMethod(key = "pulse init")
+    @Command(command = "init")
     public String init() {
         return pulseApiManager.init();
     }
 
-    @ShellMethod(key = "pulse")
-    public String fireRequest(@ShellOption Integer index) {
+    @Command
+    public void fireRequest(@Option Integer index) {
         var pulseRequest = pulseApiManager.getRequest(index);
-        return pulseHttpClient.execute(pulseRequest);
+        pulseHttpClient.execute(pulseRequest);
     }
+
 }

@@ -12,7 +12,6 @@ public class PulseRequestMapper {
 
     public PulseRequest fromRawPulseRequest(RawPulseRequest rawPulseRequest) {
         var result = new PulseRequest();
-
         result.setHttpMethod(HttpMethod.valueOf(rawPulseRequest.getHttpMethod()));
         result.setUrl(rawPulseRequest.getUrl());
         result.setHeaders(rawPulseRequest.getHeaders());

@@ -1,8 +1,10 @@
-package com.skerdy.httpulse.core;
+package com.skerdy.httpulse.terminal.writer.model;
+
+import com.skerdy.httpulse.core.HttpMethod;
 
 import java.util.Map;
 
-public class PulseRequest {
+public class PrintableSendRequest {
 
     private HttpMethod httpMethod;
 
@@ -12,7 +14,7 @@ public class PulseRequest {
 
     private Map<String, String> headers;
 
-    public PulseRequest() {
+    public PrintableSendRequest() {
     }
 
     public HttpMethod getHttpMethod() {
