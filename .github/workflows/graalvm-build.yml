@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: graalvm/setup-graalvm@v1.2.2
+      - uses: graalvm/setup-graalvm@v1
         with:
           java-version: '21'
           distribution: 'graalvm'
@@ -18,7 +18,9 @@ jobs:
           native-image-job-reports: 'true'
 
       - name: test
-        run: ./mvnw clean test
+        run: |
+           chmod +x mvnw
+          ./mvnw clean test
 
       - name: build-native
         run: ./mvnw native:compile -Pnative -DskipTests
