@@ -1,8 +1,10 @@
-package com.skerdy.httpulse.core;
+package com.skerdy.httpulse.terminal.writer.model;
 
-import java.util.Map;
+import com.skerdy.httpulse.core.HttpMethod;
 
-public class PulseRequest {
+public class PrintableRequestIdentifier {
+
+    private int index;
 
     private String name;
 
@@ -10,11 +12,15 @@ public class PulseRequest {
 
     private String url;
 
-    private String body;
+    public PrintableRequestIdentifier() {
+    }
 
-    private Map<String, String> headers;
+    public int getIndex() {
+        return index;
+    }
 
-    public PulseRequest() {
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     public String getName() {
@@ -40,21 +46,4 @@ public class PulseRequest {
     public void setUrl(String url) {
         this.url = url;
     }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
-    }
-
-    public Map<String, String> getHeaders() {
-        return headers;
-    }
-
-    public void setHeaders(Map<String, String> headers) {
-        this.headers = headers;
-    }
-
 }

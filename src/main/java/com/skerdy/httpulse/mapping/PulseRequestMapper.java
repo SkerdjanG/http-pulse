@@ -12,6 +12,7 @@ public class PulseRequestMapper {
 
     public PulseRequest fromRawPulseRequest(RawPulseRequest rawPulseRequest) {
         var result = new PulseRequest();
+        result.setName(sanitizeName(rawPulseRequest.getName()));
         result.setHttpMethod(HttpMethod.valueOf(rawPulseRequest.getHttpMethod()));
         result.setUrl(rawPulseRequest.getUrl());
         result.setHeaders(rawPulseRequest.getHeaders());
@@ -21,6 +22,14 @@ public class PulseRequestMapper {
             result.setBody(body.toString());
         }
         return result;
+    }
+
+    private String sanitizeName(String rawName) {
+        if (rawName != null) {
+            return rawName.replace("[", "")
+                    .replace("]", "");
+        }
+        return "";
     }
 
 }

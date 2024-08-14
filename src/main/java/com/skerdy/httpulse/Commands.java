@@ -18,8 +18,8 @@ public class Commands {
     }
 
     @Command(command = "init")
-    public String init() {
-        return pulseApiManager.init();
+    public void init() {
+        pulseApiManager.init();
     }
 
     @Command

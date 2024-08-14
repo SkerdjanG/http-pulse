@@ -2,7 +2,10 @@ package com.skerdy.httpulse.apimanager;
 
 import com.skerdy.httpulse.core.PulseRequest;
 import com.skerdy.httpulse.language.parser.PulseParser;
+import com.skerdy.httpulse.mapping.PrintableMapper;
 import com.skerdy.httpulse.mapping.PulseRequestMapper;
+import com.skerdy.httpulse.terminal.writer.TerminalPrettyWriter;
+import com.skerdy.httpulse.terminal.writer.model.PrintableRequestIdentifier;
 import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
@@ -11,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -20,19 +24,28 @@ public class PulseApiManager {
 
     private final PulseRequestMapper pulseRequestMapper;
 
+    private final PrintableMapper printableMapper;
+
+    private final TerminalPrettyWriter terminalPrettyWriter;
+
     private List<PulseRequest> requests;
 
-    public PulseApiManager(PulseParser pulseParser, PulseRequestMapper pulseRequestMapper) {
+    public PulseApiManager(PulseParser pulseParser,
+                           PulseRequestMapper pulseRequestMapper,
+                           PrintableMapper printableMapper,
+                           TerminalPrettyWriter terminalPrettyWriter) {
         this.pulseParser = pulseParser;
         this.pulseRequestMapper = pulseRequestMapper;
+        this.printableMapper = printableMapper;
+        this.terminalPrettyWriter = terminalPrettyWriter;
     }
 
-    public String init() {
+    public void init() {
        requests = pulseParser.parse(getRawText())
                .stream()
                .map(pulseRequestMapper::fromRawPulseRequest)
                .toList();
-       return listRequests();
+       listRequests();
     }
 
     public PulseRequest getRequest(int index) {
@@ -53,12 +66,12 @@ public class PulseApiManager {
         }
     }
 
-    private String listRequests() {
-        var result = new StringBuilder();
-        for(int i = 0; i < requests.size(); i++) {
-            result.append(i).append(" - ").append(requests.get(i).getUrl()).append(System.lineSeparator());
-        }
-        return result.toString();
+    private void listRequests() {
+         var printableIdentifiers = new ArrayList<PrintableRequestIdentifier>();
+         for (int i = 0; i < requests.size(); i++) {
+             printableIdentifiers.add(printableMapper.printableRequestIdentifier(i, requests.get(i)));
+         }
+         terminalPrettyWriter.printRequestIdentifiers(printableIdentifiers);
     }
 
 }

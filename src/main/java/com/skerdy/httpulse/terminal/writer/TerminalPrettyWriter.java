@@ -2,12 +2,14 @@ package com.skerdy.httpulse.terminal.writer;
 
 import com.skerdy.httpulse.core.HttpMethod;
 import com.skerdy.httpulse.terminal.writer.model.PrintableReceiveResponse;
+import com.skerdy.httpulse.terminal.writer.model.PrintableRequestIdentifier;
 import com.skerdy.httpulse.terminal.writer.model.PrintableSendRequest;
 import org.jline.terminal.Terminal;
 import org.jline.utils.AttributedStringBuilder;
 import org.jline.utils.AttributedStyle;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -47,6 +49,22 @@ public class TerminalPrettyWriter {
 
         if (printableReceiveResponse.getBody() != null && !printableReceiveResponse.getBody().isEmpty()) {
             writer.println(printResponseBody(printableReceiveResponse.getBody()));
+        }
+
+        writer.flush();
+    }
+
+    public void printRequestIdentifiers(List<PrintableRequestIdentifier> printableRequestIdentifiers) {
+        var writer = terminal.writer();
+
+        if (!printableRequestIdentifiers.isEmpty()) {
+            for (PrintableRequestIdentifier printableRequestIdentifier : printableRequestIdentifiers) {
+                writer.println(printRequestIdentifier(printableRequestIdentifier));
+            }
+            writer.println();
+            writer.println(printRequestIdentifierUsageGuide());
+        } else {
+            writer.println(printNoRequestsFound());
         }
 
         writer.flush();
@@ -135,6 +153,44 @@ public class TerminalPrettyWriter {
         return new AttributedStringBuilder()
                 .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.GREEN))
                 .append(prettyJsonify.pretty(responseBody))
+                .toAnsi();
+    }
+
+    /**
+     * Methods for Printing Request Identifiers
+     */
+
+    private String printRequestIdentifier(PrintableRequestIdentifier printableRequestIdentifier) {
+        return new AttributedStringBuilder()
+                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW).bold())
+                .append("[")
+                .append(String.valueOf(printableRequestIdentifier.getIndex()))
+                .append("] - ")
+                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.WHITE).italic())
+                .append(printableRequestIdentifier.getName())
+                .append(" -> ")
+                .append(printMethod(printableRequestIdentifier.getHttpMethod()))
+                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.BLUE))
+                .append(" ")
+                .append(printableRequestIdentifier.getUrl())
+                .toAnsi();
+    }
+
+    private String printRequestIdentifierUsageGuide() {
+        return new AttributedStringBuilder()
+                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW).bold())
+                .append("Please use the index of the requests above to identify or apply actions against.")
+                .append(System.lineSeparator())
+                .append("Try for example: ")
+                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.GREEN).italic())
+                .append("pulse 0")
+                .toAnsi();
+    }
+
+    private String printNoRequestsFound() {
+        return new AttributedStringBuilder()
+                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.RED).bold())
+                .append("No requests were found so far. Please provide the correct location!")
                 .toAnsi();
     }
 
