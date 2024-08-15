@@ -22,14 +22,12 @@ requestName: REQUEST_NAME NEW_LINE;
 
 REQUEST_NAME : '[' ('a'..'z'|'A'..'Z'| '_' | '-' | ' ')+ ']' ;
 
-ALPHA: [A-Za-z];
+ALPHA: [0-9A-Za-z];
 
-DIGIT: [0-9];
-
-tchar: '!' |   '#' |   '$' |   '%' |   '&' |   '\'' | '/'  | '*' |   '+' |   '-' |   '.' |   '^' |   '_' |   '`' |   '|' |   '~' |   DIGIT   |   ALPHA;
+tchar: '!' | '#' | '$' | '%' | '&' | '\'' | '/' | '*' | '+' | '-' | '.' | '^' | '_' | '`' | '|' | '~' | NUMBER | ALPHA;
 
 headerName: token;
-headerValue: token;
+headerValue: token*;
 
 token: tchar+;
 
