@@ -1,0 +1,190 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "paths": {
+    "/api/put/simple": {
+      "put": {
+        "tags": [
+          "put-controller"
+        ],
+        "operationId": "simpleResponse",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SimpleRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/post/simple": {
+      "post": {
+        "tags": [
+          "post-controller"
+        ],
+        "operationId": "simpleResponse_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SimpleRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/get/simple": {
+      "get": {
+        "tags": [
+          "get-controller"
+        ],
+        "operationId": "simpleResponse_2",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimpleResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/get/error/500": {
+      "get": {
+        "tags": [
+          "get-controller"
+        ],
+        "operationId": "error500",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/get/error/400": {
+      "get": {
+        "tags": [
+          "get-controller"
+        ],
+        "operationId": "error400",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SimpleRequestDto": {
+        "required": [
+          "stringValue"
+        ],
+        "type": "object",
+        "properties": {
+          "stringValue": {
+            "type": "string"
+          },
+          "booleanValue": {
+            "type": "boolean"
+          },
+          "integerValue": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "doubleValue": {
+            "type": "number",
+            "format": "double"
+          },
+          "floatValue": {
+            "type": "number",
+            "format": "float"
+          },
+          "longValue": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "shortValue": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bigDecimalValue": {
+            "type": "number"
+          },
+          "characterValue": {
+            "type": "string"
+          }
+        }
+      },
+      "SimpleResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "stringValue": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

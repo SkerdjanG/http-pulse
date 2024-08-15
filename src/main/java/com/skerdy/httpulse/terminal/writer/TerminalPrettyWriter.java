@@ -24,6 +24,12 @@ public class TerminalPrettyWriter {
         this.prettyJsonify = prettyJsonify;
     }
 
+    public void print(String text) {
+        var writer = terminal.writer();
+        writer.println(text);
+        writer.flush();
+    }
+
     public void printSendRequest(PrintableSendRequest printableSendRequest) {
         var writer = terminal.writer();
 
@@ -56,7 +62,7 @@ public class TerminalPrettyWriter {
 
     public void printRequestIdentifiers(List<PrintableRequestIdentifier> printableRequestIdentifiers) {
         var writer = terminal.writer();
-
+        writer.println();
         if (!printableRequestIdentifiers.isEmpty()) {
             for (PrintableRequestIdentifier printableRequestIdentifier : printableRequestIdentifiers) {
                 writer.println(printRequestIdentifier(printableRequestIdentifier));

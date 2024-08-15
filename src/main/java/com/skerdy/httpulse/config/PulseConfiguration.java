@@ -2,7 +2,7 @@ package com.skerdy.httpulse.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.skerdy.httpulse.Commands;
+import com.skerdy.httpulse.command.Commands;
 import com.skerdy.httpulse.language.parser.PulseParser;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,5 +23,4 @@ public class PulseConfiguration {
                 .setPrettyPrinting()
                 .create();
     }
-
 }

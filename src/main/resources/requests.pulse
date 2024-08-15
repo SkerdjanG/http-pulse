@@ -10,4 +10,4 @@ Content-Type: application/json
 [Simple PUT Request]
 PUT http://localhost:8080/api/put/simple
 Content-Type: application/json
-{"stringValue": "MY_TEST_2"}
+{"stringValue": "MY_TEST_3"}
