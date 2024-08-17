@@ -1,26 +1,20 @@
 package com.skerdy.httpulse.command;
 
+import com.skerdy.httpulse.command.execution.HttpExecutionCommand;
 import com.skerdy.httpulse.command.init.InitialisationCommandsWrapper;
-import com.skerdy.httpulse.manager.api.PulseApiManager;
-import com.skerdy.httpulse.core.PulseHttpClient;
 import org.springframework.shell.command.annotation.Command;
 import org.springframework.shell.command.annotation.Option;
 
 @Command(command = "pulse")
 public class Commands {
 
-    private final PulseHttpClient pulseHttpClient;
-
-    private final PulseApiManager pulseApiManager;
-
     private final InitialisationCommandsWrapper initialisationCommandsWrapper;
+    private final HttpExecutionCommand httpExecutionCommand;
 
-    public Commands(PulseHttpClient pulseHttpClient,
-                    PulseApiManager pulseApiManager,
-                    InitialisationCommandsWrapper initialisationCommandsWrapper) {
-        this.pulseHttpClient = pulseHttpClient;
-        this.pulseApiManager = pulseApiManager;
+    public Commands(InitialisationCommandsWrapper initialisationCommandsWrapper,
+                    HttpExecutionCommand httpExecutionCommand) {
         this.initialisationCommandsWrapper = initialisationCommandsWrapper;
+        this.httpExecutionCommand = httpExecutionCommand;
     }
 
     @Command(command = "init")
@@ -28,10 +22,14 @@ public class Commands {
         initialisationCommandsWrapper.init();
     }
 
+    @Command(command = "init new")
+    public void initNew() {
+        initialisationCommandsWrapper.initNew();
+    }
+
     @Command
     public void fireRequest(@Option Integer index) {
-        var pulseRequest = pulseApiManager.getRequest(index);
-        pulseHttpClient.execute(pulseRequest);
+        httpExecutionCommand.executeHttpRequest(index);
     }
 
 }

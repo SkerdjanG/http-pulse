@@ -1,6 +1,7 @@
 package com.skerdy.httpulse.manager.api;
 
 import com.skerdy.httpulse.core.PulseRequest;
+import com.skerdy.httpulse.language.parser.PulseParseException;
 import com.skerdy.httpulse.language.parser.PulseParser;
 import com.skerdy.httpulse.manager.config.PulseConfiguration;
 import com.skerdy.httpulse.mapping.PrintableMapper;
@@ -44,15 +45,23 @@ public class PulseApiManager {
         var activeDirectory = pulseConfiguration.getActiveDirectory();
         var pulseFileNames = ResourcesUtils.getPulseRequestFilesInActiveDirectory(activeDirectory);
         terminalPrettyWriter.print(styleDiscoveredRequestFiles(pulseFileNames));
-        for (String pulseFileName : pulseFileNames) {
-            requests.addAll(pulseParser.parse(ResourcesUtils.getRawTextFromPulseFile(activeDirectory + File.separator + pulseFileName))
-               .stream()
-               .map(pulseRequestMapper::fromRawPulseRequest)
-               .toList());
+        try {
+            for (String pulseFileName : pulseFileNames) {
+                requests.addAll(pulseParser.parse(ResourcesUtils.getRawTextFromPulseFile(activeDirectory + File.separator + pulseFileName))
+                        .stream()
+                        .map(pulseRequestMapper::fromRawPulseRequest)
+                        .toList());
+            }
+        } catch (PulseParseException pulseParseException) {
+            terminalPrettyWriter.print(stylePulseParseException(pulseParseException));
         }
         if (!requests.isEmpty()) {
             listRequests();
         }
+    }
+
+    public List<PulseRequest> getRequests() {
+        return this.requests;
     }
 
     public PulseRequest getRequest(int index) {
@@ -65,6 +74,21 @@ public class PulseApiManager {
              printableIdentifiers.add(printableMapper.printableRequestIdentifier(i, requests.get(i)));
          }
          terminalPrettyWriter.printRequestIdentifiers(printableIdentifiers);
+    }
+
+    private String stylePulseParseException(PulseParseException pulseParseException) {
+        return new AttributedStringBuilder()
+                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.RED).bold())
+                .append("Error during parsing of .pulse file!")
+                .append(System.lineSeparator())
+                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW).bold())
+                .append("Details: ")
+                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW).italic())
+                .append(pulseParseException.getMessage())
+                .append(System.lineSeparator())
+                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.BLUE).bold())
+                .append("Please try to fix the problem with your .pulse file and then try again.")
+                .toAnsi();
     }
 
     private String styleDiscoveredRequestFiles(List<String> requestFiles) {
