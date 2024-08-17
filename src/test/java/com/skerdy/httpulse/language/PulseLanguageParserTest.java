@@ -29,7 +29,7 @@ public class PulseLanguageParserTest {
                 "  \"phoneNumbers\": [\n" +
                 "    \"123-456-7890\",\n" +
                 "    \"987-654-3210\"\n" +
-                "  ]\n" +
+                "  ]" +
                 "}";
 
         // when
@@ -78,7 +78,7 @@ public class PulseLanguageParserTest {
                 "  \"phoneNumbers\": [\n" +
                 "    \"123-456-7890\",\n" +
                 "    \"987-654-3210\"\n" +
-                "  ]\n" +
+                "  ]" +
                 "}" +
                 "\n" +
                 "[Second Request]\n" +
@@ -86,7 +86,7 @@ public class PulseLanguageParserTest {
                 "Header-Name: HeaderValue\n" +
                 "Header-Name1: my/header\n" +
                 "{\n" +
-                "  \"name\": \"Skerdy\"\n" +
+                "  \"name\": \"Skerdy\"" +
                 "}";
 
         // when
