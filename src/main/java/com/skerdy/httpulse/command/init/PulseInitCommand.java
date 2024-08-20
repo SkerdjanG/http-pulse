@@ -77,14 +77,14 @@ public class PulseInitCommand {
 
     private String styleConfigurationMesage(String activeDirectory, String openApiFileDirectory) {
         return new AttributedStringBuilder()
-                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.WHITE).bold())
+                .style(AttributedStyle.DEFAULT.bold())
                 .append("Current active directory: ")
-                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.WHITE).italic())
+                .style(AttributedStyle.DEFAULT.italic())
                 .append(activeDirectory)
                 .append(System.lineSeparator())
-                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.WHITE).bold())
+                .style(AttributedStyle.DEFAULT.bold())
                 .append("Current open api file: ")
-                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.WHITE).italic())
+                .style(AttributedStyle.DEFAULT.italic())
                 .append(openApiFileDirectory)
                 .toAnsi();
     }

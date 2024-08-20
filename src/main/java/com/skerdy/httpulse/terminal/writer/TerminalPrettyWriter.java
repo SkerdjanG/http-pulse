@@ -82,7 +82,7 @@ public class TerminalPrettyWriter {
 
     private String printSendingRequestMessage() {
         return new AttributedStringBuilder()
-                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.WHITE).blink())
+                .style(AttributedStyle.DEFAULT.blink())
                 .append(System.lineSeparator())
                 .append("Sending request...")
                 .toAnsi();
@@ -147,7 +147,7 @@ public class TerminalPrettyWriter {
 
     private String printReceivedResponse(int responseCode) {
         return new AttributedStringBuilder()
-                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.WHITE))
+                .style(AttributedStyle.DEFAULT)
                 .append("Received response: ")
                 .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.GREEN).bold())
                 .append("code = ")
@@ -172,7 +172,7 @@ public class TerminalPrettyWriter {
                 .append("[")
                 .append(String.valueOf(printableRequestIdentifier.getIndex()))
                 .append("] - ")
-                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.WHITE).italic())
+                .style(AttributedStyle.DEFAULT.italic())
                 .append(printableRequestIdentifier.getName())
                 .append(" -> ")
                 .append(printMethod(printableRequestIdentifier.getHttpMethod()))
