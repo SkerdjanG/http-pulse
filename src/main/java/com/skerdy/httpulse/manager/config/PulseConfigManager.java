@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.*;
 
+import static com.skerdy.httpulse.utils.FileUtils.writeFile;
+
 @Component
 public class PulseConfigManager {
 
@@ -113,12 +115,5 @@ public class PulseConfigManager {
         if (pulseConfiguration.getActiveDirectory() == null || pulseConfiguration.getActiveDirectory().isEmpty()) {
             throw new InvalidPulseConfigurationException("Active directory is not set. Pulse needs an active directory to work!");
         }
-    }
-
-    private void writeFile(File file, String content) throws IOException {
-        FileWriter fw = new FileWriter(file.getAbsoluteFile());
-        BufferedWriter bw = new BufferedWriter(fw);
-        bw.write(content);
-        bw.close();
     }
 }
