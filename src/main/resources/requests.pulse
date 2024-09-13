@@ -1,5 +1,5 @@
 [Simple POST Request]
-POST http://localhost:8080/api/post/simple
+POST http://{#host}/api/post/simple
 Content-Type: application/json
 {"stringValue": "MY_TEST_1"}
 

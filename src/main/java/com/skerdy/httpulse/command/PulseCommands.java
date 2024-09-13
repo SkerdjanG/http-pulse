@@ -6,13 +6,13 @@ import org.springframework.shell.command.annotation.Command;
 import org.springframework.shell.command.annotation.Option;
 
 @Command(command = "pulse")
-public class Commands {
+public class PulseCommands {
 
     private final InitialisationCommandsWrapper initialisationCommandsWrapper;
     private final HttpExecutionCommand httpExecutionCommand;
 
-    public Commands(InitialisationCommandsWrapper initialisationCommandsWrapper,
-                    HttpExecutionCommand httpExecutionCommand) {
+    public PulseCommands(InitialisationCommandsWrapper initialisationCommandsWrapper,
+                         HttpExecutionCommand httpExecutionCommand) {
         this.initialisationCommandsWrapper = initialisationCommandsWrapper;
         this.httpExecutionCommand = httpExecutionCommand;
     }
@@ -28,8 +28,7 @@ public class Commands {
     }
 
     @Command
-    public void fireRequest(@Option Integer index) {
+    public void fireRequest(@Option(required = true) Integer index) {
         httpExecutionCommand.executeHttpRequest(index);
     }
-
 }

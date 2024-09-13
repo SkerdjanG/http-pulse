@@ -11,5 +11,4 @@ public class PatchRequestGenerator {
     public HttpRequest.Builder generate(HttpRequest.Builder httpRequestBuilder, PulseRequest pulseRequest) {
         return httpRequestBuilder.method("PATCH", HttpRequest.BodyPublishers.ofString(pulseRequest.getBody()));
     }
-
 }

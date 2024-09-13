@@ -4,6 +4,8 @@ import com.skerdy.httpulse.core.PulseRequest;
 import com.skerdy.httpulse.language.parser.PulseParseException;
 import com.skerdy.httpulse.language.parser.PulseParser;
 import com.skerdy.httpulse.manager.config.PulseConfiguration;
+import com.skerdy.httpulse.manager.environment.NoActiveEnvironmentException;
+import com.skerdy.httpulse.manager.environment.NoVariableDefinedException;
 import com.skerdy.httpulse.mapping.PrintableMapper;
 import com.skerdy.httpulse.mapping.PulseRequestMapper;
 import com.skerdy.httpulse.terminal.writer.TerminalPrettyWriter;
@@ -54,6 +56,10 @@ public class PulseApiManager {
             }
         } catch (PulseParseException pulseParseException) {
             terminalPrettyWriter.print(stylePulseParseException(pulseParseException));
+        } catch (NoActiveEnvironmentException noActiveEnvironmentException) {
+            terminalPrettyWriter.print(styleNoActiveEnvironmentException(noActiveEnvironmentException));
+        } catch (NoVariableDefinedException noVariableDefinedException) {
+            terminalPrettyWriter.print(styleNoVariableDefinedException(noVariableDefinedException));
         }
         if (!requests.isEmpty()) {
             listRequests();
@@ -74,6 +80,36 @@ public class PulseApiManager {
              printableIdentifiers.add(printableMapper.printableRequestIdentifier(i, requests.get(i)));
          }
          terminalPrettyWriter.printRequestIdentifiers(printableIdentifiers);
+    }
+
+    private String styleNoVariableDefinedException(NoVariableDefinedException noVariableDefinedException) {
+        return new AttributedStringBuilder()
+                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.RED).bold())
+                .append("Error during parsing of .pulse file!")
+                .append(System.lineSeparator())
+                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW).bold())
+                .append("Details: ")
+                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW).italic())
+                .append(noVariableDefinedException.getMessage())
+                .append(System.lineSeparator())
+                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.BLUE).bold())
+                .append("Please make sure the variable is properly defined for this environment!")
+                .toAnsi();
+    }
+
+    private String styleNoActiveEnvironmentException(NoActiveEnvironmentException noActiveEnvironmentException) {
+        return new AttributedStringBuilder()
+                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.RED).bold())
+                .append("Error during parsing of .pulse file!")
+                .append(System.lineSeparator())
+                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW).bold())
+                .append("Details: ")
+                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.YELLOW).italic())
+                .append(noActiveEnvironmentException.getMessage())
+                .append(System.lineSeparator())
+                .style(AttributedStyle.DEFAULT.foreground(AttributedStyle.BLUE).bold())
+                .append("Please make sure there is an active environment defined and used!")
+                .toAnsi();
     }
 
     private String stylePulseParseException(PulseParseException pulseParseException) {

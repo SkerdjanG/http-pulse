@@ -56,5 +56,4 @@ public class PulseRequest {
     public void setHeaders(Map<String, String> headers) {
         this.headers = headers;
     }
-
 }
