@@ -56,5 +56,4 @@ public class RawPulseRequest {
     public void setBody(String body) {
         this.body = body;
     }
-
 }

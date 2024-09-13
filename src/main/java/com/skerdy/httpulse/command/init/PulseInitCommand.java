@@ -88,5 +88,4 @@ public class PulseInitCommand {
                 .append(openApiFileDirectory)
                 .toAnsi();
     }
-
 }

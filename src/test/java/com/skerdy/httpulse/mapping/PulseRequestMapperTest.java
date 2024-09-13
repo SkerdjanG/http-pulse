@@ -2,7 +2,9 @@ package com.skerdy.httpulse.mapping;
 
 import com.skerdy.httpulse.core.HttpMethod;
 import com.skerdy.httpulse.language.model.RawPulseRequest;
+import com.skerdy.httpulse.manager.environment.EnvironmentManager;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 import java.util.Map;
 
@@ -11,7 +13,10 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class PulseRequestMapperTest {
 
-    private final PulseRequestMapper pulseRequestMapper = new PulseRequestMapper();
+    @Mock
+    private EnvironmentManager environmentManager;
+
+    private final PulseRequestMapper pulseRequestMapper = new PulseRequestMapper(environmentManager);
 
     @Test
     void shouldMapCorrectlyAValidRawPulseRequest() {

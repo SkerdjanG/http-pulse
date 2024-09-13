@@ -39,6 +39,11 @@ public class EnvironmentManager {
         return pulseConfiguration.getActiveDirectory() + File.separator + ENVIRONMENTS_FILENAME;
     }
 
+    public Object getVariable(String variableKey) {
+        loadEnvironmentsFromFileSystem();
+        return environments.get(activeEnvironment).get(variableKey);
+    }
+
     public void createNewEnvironment(String environmentName) {
         loadEnvironmentsFromFileSystem();
         if (!environments.containsKey(environmentName)) {
@@ -59,6 +64,14 @@ public class EnvironmentManager {
             throw new UnknownEnvironmentException(environmentName);
         }
         this.activeEnvironment = environmentName;
+    }
+
+    public String showEnvironment(String environmentName) {
+        if (environments == null || environments.isEmpty() || !environments.containsKey(environmentName)) {
+            throw new UnknownEnvironmentException(environmentName);
+        }
+        var environment = environments.get(environmentName);
+        return gson.toJson(environment);
     }
 
     public String getActiveEnvironment() {

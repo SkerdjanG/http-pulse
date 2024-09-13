@@ -27,4 +27,10 @@ public class OtherCommands {
     public void useEnvironment(@Option(required = true) String environmentName) {
         environmentCommandsWrapper.useEnvironment(environmentName);
     }
+
+    @Command(command = "show env")
+    public void showEnvironment(@Option(required = true) String environmentName) {
+        environmentCommandsWrapper.showEnvironment(environmentName);
+    }
+
 }

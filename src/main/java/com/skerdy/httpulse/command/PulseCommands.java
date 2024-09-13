@@ -28,8 +28,7 @@ public class PulseCommands {
     }
 
     @Command
-    public void fireRequest(@Option Integer index) {
+    public void fireRequest(@Option(required = true) Integer index) {
         httpExecutionCommand.executeHttpRequest(index);
     }
-
 }

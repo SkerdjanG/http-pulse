@@ -60,5 +60,4 @@ public class PulseHttpClient {
         printableReceiveResponse.setStatusCode(response.statusCode());
         terminalPrettyWriter.printReceiveResponse(printableReceiveResponse);
     }
-
 }

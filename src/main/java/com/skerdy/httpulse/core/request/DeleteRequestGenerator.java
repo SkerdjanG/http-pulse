@@ -11,5 +11,4 @@ public class DeleteRequestGenerator {
     public HttpRequest.Builder generate(HttpRequest.Builder httpRequestBuilder, PulseRequest pulseRequest) {
         return httpRequestBuilder.DELETE();
     }
-
 }

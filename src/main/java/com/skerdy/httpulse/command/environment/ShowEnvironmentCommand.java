@@ -1,7 +1,5 @@
 package com.skerdy.httpulse.command.environment;
 
-import com.skerdy.httpulse.manager.api.PulseApiManager;
-import com.skerdy.httpulse.manager.config.PulseConfigManager;
 import com.skerdy.httpulse.manager.environment.EnvironmentManager;
 import com.skerdy.httpulse.manager.environment.UnknownEnvironmentException;
 import com.skerdy.httpulse.terminal.writer.TerminalPrettyWriter;
@@ -12,36 +10,31 @@ import org.springframework.stereotype.Component;
 import java.util.Set;
 
 @Component
-public class ActiveEnvironmentCommand {
+public class ShowEnvironmentCommand {
 
     private final EnvironmentManager environmentManager;
-    private final PulseApiManager pulseApiManager;
-    private final PulseConfigManager pulseConfigManager;
     private final TerminalPrettyWriter terminalPrettyWriter;
 
-    public ActiveEnvironmentCommand(EnvironmentManager environmentManager, PulseApiManager pulseApiManager, PulseConfigManager pulseConfigManager,
-                                    TerminalPrettyWriter terminalPrettyWriter) {
+    public ShowEnvironmentCommand(EnvironmentManager environmentManager,
+                                  TerminalPrettyWriter terminalPrettyWriter) {
         this.environmentManager = environmentManager;
-        this.pulseApiManager = pulseApiManager;
-        this.pulseConfigManager = pulseConfigManager;
         this.terminalPrettyWriter = terminalPrettyWriter;
     }
 
-    public void useEnvironment(String environmentName) {
+    public void showEnvironment(String environmentName) {
         try {
-            environmentManager.useEnvironment(environmentName);
-            terminalPrettyWriter.print(styleUseEnvironmentSuccessful(environmentName));
-            pulseApiManager.init(pulseConfigManager.getPulseConfiguration(), false);
+            var environmentJsonString = environmentManager.showEnvironment(environmentName);
+            terminalPrettyWriter.print(styleShowEnvironmentSuccessful(environmentJsonString));
         } catch (UnknownEnvironmentException unknownEnvironmentException) {
             var allowedEnvironments = environmentManager.listEnvironments();
             terminalPrettyWriter.print(styleUnknownEnvironmentException(unknownEnvironmentException, allowedEnvironments));
         }
     }
 
-    private String styleUseEnvironmentSuccessful(String environmentName) {
+    private String styleShowEnvironmentSuccessful(String environmentJsonString) {
         return new AttributedStringBuilder()
                 .style(AttributedStyle.DEFAULT.italic())
-                .append("Using ").append(environmentName).append(" environment.")
+                .append(environmentJsonString)
                 .toAnsi();
     }
 

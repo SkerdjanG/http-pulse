@@ -11,5 +11,4 @@ public class PostRequestGenerator {
     public HttpRequest.Builder generate(HttpRequest.Builder httpRequestBuilder, PulseRequest pulseRequest) {
         return httpRequestBuilder.POST(HttpRequest.BodyPublishers.ofString(pulseRequest.getBody()));
     }
-
 }
