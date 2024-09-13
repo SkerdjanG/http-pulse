@@ -39,8 +39,29 @@ API testing. By using the custom Pulse Language, you can:
 
 ### Installation
 
-(Coming up...)
+Currently the CLI needs to be installed manually. If http-pulse becomes mature enough an automatic build distribution
+can be implemented.
+
+* Clone the project
+```
+git clone https://github.com/SkerdjanG/http-pulse.git
+```
+
+* Build
+```
+mvn clean install -DskipTests
+```
+
+* Run **http-pulse-0.0.1-SNAPSHOT.jar**
+```
+java -jar /target/http-pulse-0.0.1-SNAPSHOT.jar
+```
+
+* http-pulse cli will start executing in your terminal. Run **help** to get to know with the commands.
+```
+shell:> help
+```
 
 ### Usage
 
-(Coming up...)
+See the documentation for more details on the commands available.
