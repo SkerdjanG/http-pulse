@@ -64,4 +64,4 @@ shell:> help
 
 ### Usage
 
-See the documentation for more details on the commands available.
+See the [documentation](https://github.com/SkerdjanG/http-pulse/wiki) for more details on the commands available.
