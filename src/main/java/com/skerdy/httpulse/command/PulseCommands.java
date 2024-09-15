@@ -17,18 +17,19 @@ public class PulseCommands {
         this.httpExecutionCommand = httpExecutionCommand;
     }
 
-    @Command(command = "init")
+    @Command(command = "init", description = "Initializes http-pulse in the last configured workspace.")
     public void init() {
         initialisationCommandsWrapper.init();
     }
 
-    @Command(command = "init new")
+    @Command(command = "init new", description = "Initializes http-pulse in a new workspace.")
     public void initNew() {
         initialisationCommandsWrapper.initNew();
     }
 
-    @Command
-    public void fireRequest(@Option(required = true) Integer index) {
+    @Command(description = "Executes the desired request by passing it's index as an argument.")
+    public void fireRequest(@Option(required = true,
+            description = "The index of the request which needs to be executed.") Integer index) {
         httpExecutionCommand.executeHttpRequest(index);
     }
 }

@@ -1,29 +1,20 @@
-# http-pulse
+<img src="/assets/logo.png" alt="http-pulse-logo" style="display: block; margin: auto;">
 
-![http-pulse Logo](/assets/logo.png)
+# http-pulse
 
 **http-pulse** is an innovative and powerful command-line HTTP client designed to simplify and enhance API testing. 
 Leveraging its own custom-built **Pulse Language**, http-pulse aims to replace the need for tools like Postman or 
 IntelliJ IDEA HTTP Client, providing a seamless and efficient experience for developers and testers.
 
-## Demo
-
-- pulse init
-- pulse 0
-- pulse 1
-- pulse 2
-
-![](/assets/http-pulse-demo.gif)
-
 ## Features
 
-- **Full-fledged REST Client**: Execute GET, POST, PUT, DELETE, PATCH and other HTTP methods with ease.
+- **Full-fledged REST Client**: Execute _GET_, _POST_, _PUT_, _DELETE_, _PATCH_ and other **HTTP methods** with ease.
 - **Pulse Language**: Our custom language simplifies API testing, making it intuitive and efficient.
 - **CLI Convenience**: Run http-pulse as a standalone application from your terminal.
-- **Scripting and Automation**: Automate your API tests and integrate them into your CI/CD pipelines effortlessly. (Coming up...)
-- **Response Handling**: Easily parse and manipulate API responses. (Coming up..)
-- **Environment Management**: Manage different environments for your API tests seamlessly. (Coming up...)
-- **Extensive Documentation**: Comprehensive documentation to help you get started and master http-pulse. (Coming up...)
+- **Scripting and Automation**: Automate your API tests and integrate them into your CI/CD pipelines effortlessly. :soon:
+- **Response Handling**: Easily parse and manipulate API responses. :soon:
+- **Environment Management**: Manage different environments for your API tests seamlessly.
+- **Extensive Documentation**: Comprehensive documentation to help you get started and master http-pulse. :construction:
 
 ## Why http-pulse?
 
@@ -57,11 +48,15 @@ mvn clean install -DskipTests
 java -jar /target/http-pulse-0.0.1-SNAPSHOT.jar
 ```
 
-* http-pulse cli will start executing in your terminal. Run **help** to get to know with the commands.
+* http-pulse cli will start executing in your terminal. :raised_hands: Run **help** to get to know with the commands.
 ```
 shell:> help
 ```
 
 ### Usage
 
-See the [documentation](https://github.com/SkerdjanG/http-pulse/wiki) for more details on the commands available.
+See the [documentation](https://github.com/SkerdjanG/http-pulse/wiki) for more details on the commands available. :notebook:
+
+### See demos
+
+You can check some useful demos at the [wiki page](https://github.com/SkerdjanG/http-pulse/wiki/Demos). :wink:
