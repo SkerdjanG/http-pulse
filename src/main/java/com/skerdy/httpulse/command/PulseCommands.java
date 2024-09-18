@@ -2,20 +2,16 @@ package com.skerdy.httpulse.command;
 
 import com.skerdy.httpulse.command.execution.HttpExecutionCommand;
 import com.skerdy.httpulse.command.init.InitialisationCommandsWrapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.shell.command.annotation.Command;
 import org.springframework.shell.command.annotation.Option;
 
 @Command(command = "pulse")
+@RequiredArgsConstructor
 public class PulseCommands {
 
     private final InitialisationCommandsWrapper initialisationCommandsWrapper;
     private final HttpExecutionCommand httpExecutionCommand;
-
-    public PulseCommands(InitialisationCommandsWrapper initialisationCommandsWrapper,
-                         HttpExecutionCommand httpExecutionCommand) {
-        this.initialisationCommandsWrapper = initialisationCommandsWrapper;
-        this.httpExecutionCommand = httpExecutionCommand;
-    }
 
     @Command(command = "init", description = "Initializes http-pulse in the last configured workspace.")
     public void init() {

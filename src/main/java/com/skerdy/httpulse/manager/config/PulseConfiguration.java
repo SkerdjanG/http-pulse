@@ -1,5 +1,10 @@
 package com.skerdy.httpulse.manager.config;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 public class PulseConfiguration {
 
     /*
@@ -14,19 +19,4 @@ public class PulseConfiguration {
      */
     private String activeDirectory;
 
-    public String getOpenApiSource() {
-        return openApiSource;
-    }
-
-    public void setOpenApiSource(String openApiSource) {
-        this.openApiSource = openApiSource;
-    }
-
-    public String getActiveDirectory() {
-        return activeDirectory;
-    }
-
-    public void setActiveDirectory(String activeDirectory) {
-        this.activeDirectory = activeDirectory;
-    }
 }

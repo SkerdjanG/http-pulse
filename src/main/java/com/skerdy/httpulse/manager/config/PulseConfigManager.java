@@ -2,7 +2,9 @@ package com.skerdy.httpulse.manager.config;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
+import com.skerdy.httpulse.manager.config.exception.*;
 import com.skerdy.httpulse.utils.ResourcesUtils;
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -10,7 +12,7 @@ import java.io.*;
 import static com.skerdy.httpulse.utils.FileUtils.writeFile;
 
 @Component
-public class PulseConfigManager {
+public class PulseConfigManager implements ConfigManager {
 
     private static final String ROOT_CONFIG_DIRECTORY = System.getProperty("user.home")
             + File.separator + ".pulse";
@@ -23,6 +25,7 @@ public class PulseConfigManager {
 
     private static final String SAMPLE_PULSE_REQUESTS = SAMPLE_CONFIG_DIRECTORY + File.separator + "requests.pulse";
 
+    @Getter
     private PulseConfiguration pulseConfiguration;
 
     private final Gson gson;
@@ -33,10 +36,7 @@ public class PulseConfigManager {
         retrieveConfigOrSetIfNotExists();
     }
 
-    public PulseConfiguration getPulseConfiguration() {
-        return this.pulseConfiguration;
-    }
-
+    @Override
     public void setNewConfig(String activeDirectory, String openApiLocation) {
         this.pulseConfiguration.setActiveDirectory(activeDirectory);
         if (openApiLocation != null && !openApiLocation.isEmpty()) {
@@ -97,7 +97,10 @@ public class PulseConfigManager {
         var sampleDirectory = new File(SAMPLE_CONFIG_DIRECTORY);
 
         // create sample directory with sample openApi json and sample requests.pulse
-        sampleDirectory.mkdirs();
+        var isSampleDirectoryCreated = sampleDirectory.mkdirs();
+        if (!isSampleDirectoryCreated && !sampleDirectory.exists()) {
+            throw new SampleDirectoryCreationException();
+        }
 
         var sampleOpenApiFile = new File(SAMPLE_OPEN_API_JSON);
         var sampleOpenApiJsonText = ResourcesUtils.getTextFromResources("sample-open-api.json");
@@ -107,7 +110,7 @@ public class PulseConfigManager {
             var samplePulseRequestsText = ResourcesUtils.getTextFromResources("requests.pulse");
             writeFile(samplePulseRequestsFile, samplePulseRequestsText);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SampleDirectoryCreationException();
         }
     }
 

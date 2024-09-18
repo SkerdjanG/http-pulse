@@ -3,6 +3,7 @@ package com.skerdy.httpulse.language;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.skerdy.httpulse.language.parser.Parser;
 import com.skerdy.httpulse.language.parser.PulseParser;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class PulseLanguageParserTest {
 
-    private PulseParser pulseParser;
+    private Parser pulseParser;
 
     @Test
     void whenRequestSyntaxIsProvided_itParsesCorrectlyToInternalModel() {

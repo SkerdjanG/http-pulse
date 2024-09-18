@@ -1,16 +1,18 @@
 package com.skerdy.httpulse.manager.api;
 
 import com.skerdy.httpulse.core.PulseRequest;
-import com.skerdy.httpulse.language.parser.PulseParseException;
-import com.skerdy.httpulse.language.parser.PulseParser;
+import com.skerdy.httpulse.language.parser.Parser;
+import com.skerdy.httpulse.language.parser.exception.PulseParseException;
 import com.skerdy.httpulse.manager.config.PulseConfiguration;
-import com.skerdy.httpulse.manager.environment.NoActiveEnvironmentException;
-import com.skerdy.httpulse.manager.environment.NoVariableDefinedException;
+import com.skerdy.httpulse.manager.environment.exception.NoActiveEnvironmentException;
+import com.skerdy.httpulse.manager.environment.exception.NoVariableDefinedException;
 import com.skerdy.httpulse.mapping.PrintableMapper;
 import com.skerdy.httpulse.mapping.PulseRequestMapper;
 import com.skerdy.httpulse.terminal.writer.TerminalPrettyWriter;
 import com.skerdy.httpulse.terminal.writer.model.PrintableRequestIdentifier;
 import com.skerdy.httpulse.utils.ResourcesUtils;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.jline.utils.AttributedStringBuilder;
 import org.jline.utils.AttributedStyle;
 import org.springframework.stereotype.Component;
@@ -20,9 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class PulseApiManager {
+@RequiredArgsConstructor
+public class PulseApiManager implements ApiManager {
 
-    private final PulseParser pulseParser;
+    private final Parser pulseParser;
 
     private final PulseRequestMapper pulseRequestMapper;
 
@@ -30,18 +33,10 @@ public class PulseApiManager {
 
     private final TerminalPrettyWriter terminalPrettyWriter;
 
+    @Getter
     private List<PulseRequest> requests;
 
-    public PulseApiManager(PulseParser pulseParser,
-                           PulseRequestMapper pulseRequestMapper,
-                           PrintableMapper printableMapper,
-                           TerminalPrettyWriter terminalPrettyWriter) {
-        this.pulseParser = pulseParser;
-        this.pulseRequestMapper = pulseRequestMapper;
-        this.printableMapper = printableMapper;
-        this.terminalPrettyWriter = terminalPrettyWriter;
-    }
-
+    @Override
     public void init(PulseConfiguration pulseConfiguration, boolean shouldGenerateOpenApi) {
         requests = new ArrayList<>();
         var activeDirectory = pulseConfiguration.getActiveDirectory();
@@ -66,10 +61,7 @@ public class PulseApiManager {
         }
     }
 
-    public List<PulseRequest> getRequests() {
-        return this.requests;
-    }
-
+    @Override
     public PulseRequest getRequest(int index) {
         return requests.get(index);
     }

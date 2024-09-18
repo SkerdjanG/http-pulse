@@ -6,23 +6,21 @@ import com.skerdy.httpulse.core.HttpMethod;
 import com.skerdy.httpulse.core.PulseRequest;
 import com.skerdy.httpulse.language.model.RawPulseRequest;
 import com.skerdy.httpulse.manager.environment.EnvironmentManager;
-import com.skerdy.httpulse.manager.environment.NoActiveEnvironmentException;
-import com.skerdy.httpulse.manager.environment.NoVariableDefinedException;
+import com.skerdy.httpulse.manager.environment.exception.NoActiveEnvironmentException;
+import com.skerdy.httpulse.manager.environment.exception.NoVariableDefinedException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Component
+@RequiredArgsConstructor
 public class PulseRequestMapper {
 
     private static final Pattern VARIABLE_PATTERN = Pattern.compile("\\{#\\w+}");
 
     private final EnvironmentManager environmentManager;
-
-    public PulseRequestMapper(EnvironmentManager environmentManager) {
-        this.environmentManager = environmentManager;
-    }
 
     public PulseRequest fromRawPulseRequest(RawPulseRequest rawPulseRequest) {
         var result = new PulseRequest();

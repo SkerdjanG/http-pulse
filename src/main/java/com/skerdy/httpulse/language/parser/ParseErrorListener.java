@@ -1,5 +1,6 @@
 package com.skerdy.httpulse.language.parser;
 
+import com.skerdy.httpulse.language.parser.exception.PulseParseException;
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;

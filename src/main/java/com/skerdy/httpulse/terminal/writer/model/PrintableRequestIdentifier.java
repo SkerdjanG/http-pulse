@@ -1,7 +1,11 @@
 package com.skerdy.httpulse.terminal.writer.model;
 
 import com.skerdy.httpulse.core.HttpMethod;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
 public class PrintableRequestIdentifier {
 
     private int index;
@@ -12,38 +16,4 @@ public class PrintableRequestIdentifier {
 
     private String url;
 
-    public PrintableRequestIdentifier() {
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
-    public void setIndex(int index) {
-        this.index = index;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public HttpMethod getHttpMethod() {
-        return httpMethod;
-    }
-
-    public void setHttpMethod(HttpMethod httpMethod) {
-        this.httpMethod = httpMethod;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
 }

@@ -1,28 +1,22 @@
 package com.skerdy.httpulse.command.init;
 
-import com.skerdy.httpulse.manager.api.PulseApiManager;
-import com.skerdy.httpulse.manager.config.PulseConfigManager;
+import com.skerdy.httpulse.manager.api.ApiManager;
+import com.skerdy.httpulse.manager.config.ConfigManager;
+import lombok.RequiredArgsConstructor;
 import org.springframework.shell.component.flow.ComponentFlow;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class PulseInitNewCommand {
 
     private final ComponentFlow.Builder componentFlowBuilder;
 
-    private final PulseConfigManager pulseConfigManager;
-    private final PulseApiManager pulseApiManager;
-
-    public PulseInitNewCommand(ComponentFlow.Builder componentFlowBuilder,
-                               PulseConfigManager pulseConfigManager,
-                               PulseApiManager pulseApiManager) {
-        this.componentFlowBuilder = componentFlowBuilder;
-        this.pulseConfigManager = pulseConfigManager;
-        this.pulseApiManager = pulseApiManager;
-    }
+    private final ConfigManager configManager;
+    private final ApiManager apiManager;
 
     public void initNew() {
-        var pulseConfiguration = pulseConfigManager.getPulseConfiguration();
+        var pulseConfiguration = configManager.getPulseConfiguration();
 
         // ask user to set new active directory
         ComponentFlow activeDirectoryFlow = componentFlowBuilder.clone().reset()
@@ -46,11 +40,11 @@ public class PulseInitNewCommand {
                     .and().build();
             var openApiLocationResult = openApiFlow.run();
             var providedOpenApiLocation = openApiLocationResult.getContext().get("openApiLocation", String.class);
-            pulseConfigManager.setNewConfig(providedActiveDirectory, providedOpenApiLocation);
-            pulseApiManager.init(pulseConfiguration, true);
+            configManager.setNewConfig(providedActiveDirectory, providedOpenApiLocation);
+            apiManager.init(pulseConfiguration, true);
         } else {
-            pulseConfigManager.setNewConfig(providedActiveDirectory, null);
-            pulseApiManager.init(pulseConfiguration, false);
+            configManager.setNewConfig(providedActiveDirectory, null);
+            apiManager.init(pulseConfiguration, false);
         }
     }
 }

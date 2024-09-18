@@ -10,8 +10,9 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import java.util.List;
 
-public class PulseParser {
+public class PulseParser implements Parser {
 
+    @Override
     public List<RawPulseRequest> parse(String text) {
         var pulseLexer = new PulseRequestLexer(CharStreams.fromString(text));
         var tokens = new CommonTokenStream(pulseLexer);

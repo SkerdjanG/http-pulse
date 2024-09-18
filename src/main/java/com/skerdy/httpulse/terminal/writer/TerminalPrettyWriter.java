@@ -4,6 +4,7 @@ import com.skerdy.httpulse.core.HttpMethod;
 import com.skerdy.httpulse.terminal.writer.model.PrintableReceiveResponse;
 import com.skerdy.httpulse.terminal.writer.model.PrintableRequestIdentifier;
 import com.skerdy.httpulse.terminal.writer.model.PrintableSendRequest;
+import lombok.RequiredArgsConstructor;
 import org.jline.terminal.Terminal;
 import org.jline.utils.AttributedStringBuilder;
 import org.jline.utils.AttributedStyle;
@@ -13,16 +14,12 @@ import java.util.List;
 import java.util.Map;
 
 @Component
+@RequiredArgsConstructor
 public class TerminalPrettyWriter {
 
     private final Terminal terminal;
 
     private final PrettyJsonify prettyJsonify;
-
-    public TerminalPrettyWriter(Terminal terminal, PrettyJsonify prettyJsonify) {
-        this.terminal = terminal;
-        this.prettyJsonify = prettyJsonify;
-    }
 
     public void print(String text) {
         var writer = terminal.writer();
