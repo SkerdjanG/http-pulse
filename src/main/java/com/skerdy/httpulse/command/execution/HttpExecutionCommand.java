@@ -1,34 +1,28 @@
 package com.skerdy.httpulse.command.execution;
 
 import com.skerdy.httpulse.core.PulseHttpClient;
-import com.skerdy.httpulse.manager.api.PulseApiManager;
+import com.skerdy.httpulse.manager.api.ApiManager;
 import com.skerdy.httpulse.terminal.writer.TerminalPrettyWriter;
+import lombok.RequiredArgsConstructor;
 import org.jline.utils.AttributedStringBuilder;
 import org.jline.utils.AttributedStyle;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class HttpExecutionCommand {
 
     private final TerminalPrettyWriter terminalPrettyWriter;
     private final PulseHttpClient pulseHttpClient;
-    private final PulseApiManager pulseApiManager;
-
-    public HttpExecutionCommand(TerminalPrettyWriter terminalPrettyWriter,
-                                PulseHttpClient pulseHttpClient,
-                                PulseApiManager pulseApiManager) {
-        this.terminalPrettyWriter = terminalPrettyWriter;
-        this.pulseHttpClient = pulseHttpClient;
-        this.pulseApiManager = pulseApiManager;
-    }
+    private final ApiManager apiManager;
 
     public void executeHttpRequest(int requestIndex) {
-        var pulseRequests = pulseApiManager.getRequests();
+        var pulseRequests = apiManager.getRequests();
         if (pulseRequests == null || pulseRequests.isEmpty()) {
             terminalPrettyWriter.print(styleNoRequestsAvailable());
         } else {
             if (requestIndex >= 0 && requestIndex <= pulseRequests.size() - 1) {
-                var pulseRequest = pulseApiManager.getRequest(requestIndex);
+                var pulseRequest = apiManager.getRequest(requestIndex);
                 pulseHttpClient.execute(pulseRequest);
             } else {
                 terminalPrettyWriter.print(styleInvalidIdentifierOfRequests(requestIndex, pulseRequests.size()));

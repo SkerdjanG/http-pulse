@@ -1,7 +1,8 @@
 package com.skerdy.httpulse.core.request;
 
 import com.skerdy.httpulse.core.PulseRequest;
-import com.skerdy.httpulse.core.exceptions.UnsupportedHttpMethodException;
+import com.skerdy.httpulse.core.exception.UnsupportedHttpMethodException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.net.URI;
@@ -9,7 +10,8 @@ import java.net.http.HttpRequest;
 import java.util.Map;
 
 @Component
-public class HttpRequestGenerator {
+@RequiredArgsConstructor
+public class HttpRequestGenerator implements RequestGenerator {
 
     private final PostRequestGenerator postRequestGenerator;
     private final GetRequestGenerator getRequestGenerator;
@@ -17,18 +19,7 @@ public class HttpRequestGenerator {
     private final PatchRequestGenerator patchRequestGenerator;
     private final DeleteRequestGenerator deleteRequestGenerator;
 
-    public HttpRequestGenerator(PostRequestGenerator postRequestGenerator,
-                                GetRequestGenerator getRequestGenerator,
-                                PutRequestGenerator putRequestGenerator,
-                                PatchRequestGenerator patchRequestGenerator,
-                                DeleteRequestGenerator deleteRequestGenerator) {
-        this.postRequestGenerator = postRequestGenerator;
-        this.getRequestGenerator = getRequestGenerator;
-        this.putRequestGenerator = putRequestGenerator;
-        this.patchRequestGenerator = patchRequestGenerator;
-        this.deleteRequestGenerator = deleteRequestGenerator;
-    }
-
+    @Override
     public HttpRequest generate(PulseRequest pulseRequest) {
         var httpRequest = HttpRequest.newBuilder(URI.create(pulseRequest.getUrl()));
 

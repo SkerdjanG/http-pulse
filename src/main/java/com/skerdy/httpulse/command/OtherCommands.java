@@ -1,17 +1,15 @@
 package com.skerdy.httpulse.command;
 
 import com.skerdy.httpulse.command.environment.EnvironmentCommandsWrapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.shell.command.annotation.Command;
 import org.springframework.shell.command.annotation.Option;
 
 @Command
+@RequiredArgsConstructor
 public class OtherCommands {
 
     private final EnvironmentCommandsWrapper environmentCommandsWrapper;
-
-    public OtherCommands(EnvironmentCommandsWrapper environmentCommandsWrapper) {
-        this.environmentCommandsWrapper = environmentCommandsWrapper;
-    }
 
     @Command(command = "new env",
             description = "Creates a new empty environment in the working directory.")

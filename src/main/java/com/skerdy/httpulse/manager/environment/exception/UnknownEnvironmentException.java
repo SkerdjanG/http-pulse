@@ -1,6 +1,6 @@
-package com.skerdy.httpulse.manager.environment;
+package com.skerdy.httpulse.manager.environment.exception;
 
-import com.skerdy.httpulse.core.exceptions.BaseException;
+import com.skerdy.httpulse.core.exception.BaseException;
 
 public class UnknownEnvironmentException extends BaseException {
 

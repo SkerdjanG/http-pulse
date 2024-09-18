@@ -1,4 +1,4 @@
-package com.skerdy.httpulse.core.exceptions;
+package com.skerdy.httpulse.core.exception;
 
 public class UnsupportedHttpMethodException extends BaseException {
 

@@ -1,8 +1,9 @@
 package com.skerdy.httpulse.command.environment;
 
 import com.skerdy.httpulse.manager.environment.EnvironmentManager;
-import com.skerdy.httpulse.manager.environment.UnknownEnvironmentException;
+import com.skerdy.httpulse.manager.environment.exception.UnknownEnvironmentException;
 import com.skerdy.httpulse.terminal.writer.TerminalPrettyWriter;
+import lombok.RequiredArgsConstructor;
 import org.jline.utils.AttributedStringBuilder;
 import org.jline.utils.AttributedStyle;
 import org.springframework.stereotype.Component;
@@ -10,16 +11,11 @@ import org.springframework.stereotype.Component;
 import java.util.Set;
 
 @Component
+@RequiredArgsConstructor
 public class ShowEnvironmentCommand {
 
     private final EnvironmentManager environmentManager;
     private final TerminalPrettyWriter terminalPrettyWriter;
-
-    public ShowEnvironmentCommand(EnvironmentManager environmentManager,
-                                  TerminalPrettyWriter terminalPrettyWriter) {
-        this.environmentManager = environmentManager;
-        this.terminalPrettyWriter = terminalPrettyWriter;
-    }
 
     public void showEnvironment(String environmentName) {
         try {

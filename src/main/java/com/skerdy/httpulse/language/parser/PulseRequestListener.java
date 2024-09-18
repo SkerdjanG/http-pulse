@@ -3,11 +3,13 @@ package com.skerdy.httpulse.language.parser;
 import com.skerdy.httpulse.PulseRequestBaseListener;
 import com.skerdy.httpulse.PulseRequestParser;
 import com.skerdy.httpulse.language.model.RawPulseRequest;
+import lombok.Getter;
 
 import java.util.*;
 
 public class PulseRequestListener extends PulseRequestBaseListener {
 
+    @Getter
     private List<RawPulseRequest> requests;
 
     private RawPulseRequest current;
@@ -15,10 +17,6 @@ public class PulseRequestListener extends PulseRequestBaseListener {
     private Map<String, String> headers;
 
     private Map.Entry<String, String> header;
-
-    public List<RawPulseRequest> getRequests() {
-        return requests;
-    }
 
     @Override
     public void enterRequestFile(PulseRequestParser.RequestFileContext ctx) {

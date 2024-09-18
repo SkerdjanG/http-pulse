@@ -1,6 +1,6 @@
-package com.skerdy.httpulse.language.parser;
+package com.skerdy.httpulse.language.parser.exception;
 
-import com.skerdy.httpulse.core.exceptions.BaseException;
+import com.skerdy.httpulse.core.exception.BaseException;
 
 public class PulseParseException extends BaseException {
 

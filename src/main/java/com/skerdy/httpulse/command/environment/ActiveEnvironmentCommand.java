@@ -1,10 +1,11 @@
 package com.skerdy.httpulse.command.environment;
 
-import com.skerdy.httpulse.manager.api.PulseApiManager;
-import com.skerdy.httpulse.manager.config.PulseConfigManager;
+import com.skerdy.httpulse.manager.api.ApiManager;
+import com.skerdy.httpulse.manager.config.ConfigManager;
 import com.skerdy.httpulse.manager.environment.EnvironmentManager;
-import com.skerdy.httpulse.manager.environment.UnknownEnvironmentException;
+import com.skerdy.httpulse.manager.environment.exception.UnknownEnvironmentException;
 import com.skerdy.httpulse.terminal.writer.TerminalPrettyWriter;
+import lombok.RequiredArgsConstructor;
 import org.jline.utils.AttributedStringBuilder;
 import org.jline.utils.AttributedStyle;
 import org.springframework.stereotype.Component;
@@ -12,26 +13,19 @@ import org.springframework.stereotype.Component;
 import java.util.Set;
 
 @Component
+@RequiredArgsConstructor
 public class ActiveEnvironmentCommand {
 
     private final EnvironmentManager environmentManager;
-    private final PulseApiManager pulseApiManager;
-    private final PulseConfigManager pulseConfigManager;
+    private final ApiManager apiManager;
+    private final ConfigManager configManager;
     private final TerminalPrettyWriter terminalPrettyWriter;
-
-    public ActiveEnvironmentCommand(EnvironmentManager environmentManager, PulseApiManager pulseApiManager, PulseConfigManager pulseConfigManager,
-                                    TerminalPrettyWriter terminalPrettyWriter) {
-        this.environmentManager = environmentManager;
-        this.pulseApiManager = pulseApiManager;
-        this.pulseConfigManager = pulseConfigManager;
-        this.terminalPrettyWriter = terminalPrettyWriter;
-    }
 
     public void useEnvironment(String environmentName) {
         try {
             environmentManager.useEnvironment(environmentName);
             terminalPrettyWriter.print(styleUseEnvironmentSuccessful(environmentName));
-            pulseApiManager.init(pulseConfigManager.getPulseConfiguration(), false);
+            apiManager.init(configManager.getPulseConfiguration(), false);
         } catch (UnknownEnvironmentException unknownEnvironmentException) {
             var allowedEnvironments = environmentManager.listEnvironments();
             terminalPrettyWriter.print(styleUnknownEnvironmentException(unknownEnvironmentException, allowedEnvironments));

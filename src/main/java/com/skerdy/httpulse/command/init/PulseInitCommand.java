@@ -1,34 +1,26 @@
 package com.skerdy.httpulse.command.init;
 
-import com.skerdy.httpulse.manager.api.PulseApiManager;
-import com.skerdy.httpulse.manager.config.PulseConfigManager;
+import com.skerdy.httpulse.manager.api.ApiManager;
+import com.skerdy.httpulse.manager.config.ConfigManager;
 import com.skerdy.httpulse.terminal.writer.TerminalPrettyWriter;
+import lombok.RequiredArgsConstructor;
 import org.jline.utils.AttributedStringBuilder;
 import org.jline.utils.AttributedStyle;
 import org.springframework.shell.component.flow.ComponentFlow;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class PulseInitCommand {
 
     private final ComponentFlow.Builder componentFlowBuilder;
 
-    private final PulseConfigManager pulseConfigManager;
+    private final ConfigManager configManager;
     private final TerminalPrettyWriter terminalPrettyWriter;
-    private final PulseApiManager pulseApiManager;
-
-    public PulseInitCommand(ComponentFlow.Builder componentFlowBuilder,
-                            PulseConfigManager pulseConfigManager,
-                            TerminalPrettyWriter terminalPrettyWriter,
-                            PulseApiManager pulseApiManager) {
-        this.componentFlowBuilder = componentFlowBuilder;
-        this.pulseConfigManager = pulseConfigManager;
-        this.terminalPrettyWriter = terminalPrettyWriter;
-        this.pulseApiManager = pulseApiManager;
-    }
+    private final ApiManager apiManager;
 
     public void init() {
-        var pulseConfiguration = pulseConfigManager.getPulseConfiguration();
+        var pulseConfiguration = configManager.getPulseConfiguration();
         terminalPrettyWriter.print(styleConfigurationMesage(pulseConfiguration.getActiveDirectory(),
                 pulseConfiguration.getOpenApiSource()));
 
@@ -42,7 +34,7 @@ public class PulseInitCommand {
 
         if (result.getContext().stream().toList().getFirst().getValue() == null || result.getContext().get("continue").equals(Boolean.TRUE)) {
             // continue with the current configuration
-            pulseApiManager.init(pulseConfiguration, false);
+            apiManager.init(pulseConfiguration, false);
         } else {
             // ask user to set new active directory
             ComponentFlow activeDirectoryFlow = componentFlowBuilder.clone().reset()
@@ -66,11 +58,11 @@ public class PulseInitCommand {
                         .and().build();
                 var openApiLocationResult = openApiFlow.run();
                 var providedOpenApiLocation = openApiLocationResult.getContext().get("openApiLocation", String.class);
-                pulseConfigManager.setNewConfig(providedActiveDirectory, providedOpenApiLocation);
-                pulseApiManager.init(pulseConfiguration, true);
+                configManager.setNewConfig(providedActiveDirectory, providedOpenApiLocation);
+                apiManager.init(pulseConfiguration, true);
             } else {
-                pulseConfigManager.setNewConfig(providedActiveDirectory, null);
-                pulseApiManager.init(pulseConfiguration, false);
+                configManager.setNewConfig(providedActiveDirectory, null);
+                apiManager.init(pulseConfiguration, false);
             }
         }
     }

@@ -1,22 +1,19 @@
 package com.skerdy.httpulse.command.environment;
 
-import com.skerdy.httpulse.manager.environment.EnvironmentAlreadyExistsException;
+import com.skerdy.httpulse.manager.environment.exception.EnvironmentAlreadyExistsException;
 import com.skerdy.httpulse.manager.environment.EnvironmentManager;
 import com.skerdy.httpulse.terminal.writer.TerminalPrettyWriter;
+import lombok.RequiredArgsConstructor;
 import org.jline.utils.AttributedStringBuilder;
 import org.jline.utils.AttributedStyle;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class NewEnvironmentCommand {
 
     private final EnvironmentManager environmentManager;
     private final TerminalPrettyWriter terminalPrettyWriter;
-
-    public NewEnvironmentCommand(EnvironmentManager environmentManager, TerminalPrettyWriter terminalPrettyWriter) {
-        this.environmentManager = environmentManager;
-        this.terminalPrettyWriter = terminalPrettyWriter;
-    }
 
     public void newEnvironment(String environmentName) {
         try {

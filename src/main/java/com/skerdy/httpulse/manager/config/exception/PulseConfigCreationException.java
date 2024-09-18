@@ -1,6 +1,6 @@
-package com.skerdy.httpulse.manager.config;
+package com.skerdy.httpulse.manager.config.exception;
 
-import com.skerdy.httpulse.core.exceptions.BaseException;
+import com.skerdy.httpulse.core.exception.BaseException;
 
 public class PulseConfigCreationException extends BaseException {
 
