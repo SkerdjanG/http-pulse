@@ -22,7 +22,7 @@ requestName: REQUEST_NAME NEW_LINE;
 
 REQUEST_NAME : '[' ('a'..'z'|'A'..'Z'| '_' | '-' | ' ')+ ']' ;
 
-ALPHA: [0-9A-Za-z];
+ALPHA: [A-Za-z];
 
 tchar: '!' | '#' | '$' | '%' | '&' | '\'' | '/' | '*' | '+' | '-' | '.' | '^' | '_' | '`' | '|' | '~' | NUMBER | ALPHA;
 
@@ -34,7 +34,7 @@ token: tchar+;
 // JSON grammar
 body: value;
 
-object: '{' pair (',' pair)* '}' | '{' '}' ;
+object: '{' NEW_LINE* pair NEW_LINE* (',' pair NEW_LINE*)*  '}' | '{' '}' ;
 
 pair
     : STRING ':' value
