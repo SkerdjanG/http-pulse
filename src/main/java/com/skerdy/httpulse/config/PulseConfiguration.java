@@ -2,6 +2,7 @@ package com.skerdy.httpulse.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.Strictness;
 import com.skerdy.httpulse.command.OtherCommands;
 import com.skerdy.httpulse.command.PulseCommands;
 import com.skerdy.httpulse.language.parser.Parser;
@@ -32,6 +33,7 @@ public class PulseConfiguration {
     public Gson gson() {
         return new GsonBuilder()
                 .setPrettyPrinting()
+                .setStrictness(Strictness.LENIENT)
                 .create();
     }
 }

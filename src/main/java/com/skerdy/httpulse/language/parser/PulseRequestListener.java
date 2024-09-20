@@ -84,7 +84,6 @@ public class PulseRequestListener extends PulseRequestBaseListener {
     public void enterBody(PulseRequestParser.BodyContext ctx) {
         current.setBody(ctx.getText()
                 .replace("<EOF>", "")
-                .replace("\"\"", "\"")
         );
     }
 }

@@ -1,7 +1,9 @@
 [Simple POST Request]
 POST http://{#host}/api/post/simple
 Content-Type: application/json
-{"stringValue": "MY_TEST_1"}
+{
+    "stringValue": "MY_TEST_1"
+}
 
 [Simple GET Request]
 GET http://localhost:8080/api/get/simple
@@ -10,4 +12,54 @@ Content-Type: application/json
 [Simple PUT Request]
 PUT http://localhost:8080/api/put/simple
 Content-Type: application/json
-{"stringValue": "MY_TEST_3"}
+{
+    "stringValue": "MY_TEST_3"
+}
+
+[Retrieve mocked posts]
+GET https://dummy-json.mock.beeceptor.com/posts
+Content-Type: application/json
+
+[Retrieve Comment by id]
+GET https://dummy-json.mock.beeceptor.com//comments/1
+Content-Type: application/json
+
+[Create Update order]
+PUT https://fake-store-api.mock.beeceptor.com/api/orders
+Content-Type: application/json
+{
+    "user_id": 1,
+    "items": [
+        {
+            "product_id": 1,
+            "quantity": 2
+        },
+        {
+            "product_id": 3,
+            "quantity": 1
+        }
+    ]
+}
+
+[Create Hook]
+POST https://posthook-api.mock.beeceptor.com/v1/hooks
+Content-Type: application/json
+
+[Delete Hook]
+DELETE https://posthook-api.mock.beeceptor.com/v1/hooks/1
+Content-Type: application/json
+
+[Create Update Project]
+PUT https://posthook-api.mock.beeceptor.com/v1/projects/
+Content-Type: application/json
+{
+    "name": "updated-project",
+    "domain": "api.example.com",
+    "headerAuthorization": "",
+    "minRetries": 1,
+    "retryDelaySecs": 5
+}
+
+[Create account]
+POST https://twilio-api.mock.beeceptor.com/2010-04-01/Accounts.json
+Content-Type: application/x-www-form-urlencoded
