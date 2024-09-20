@@ -1,0 +1,3 @@
+[Simple 2]
+GET http://localhost:8080/api/get/simple
+Content-Type: application/json
