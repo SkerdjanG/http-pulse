@@ -1,0 +1,3 @@
+[Simple 2]
+DELETE http://localhost:8080/api/delete/simple
+Content-Type: application/json

@@ -1,0 +1,4 @@
+[Simple GET Request]
+GET
+http://localhost:8080/api/get/simple
+Content-Type: application/json
